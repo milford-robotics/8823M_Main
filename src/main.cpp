@@ -90,9 +90,9 @@ void usercontrol(void) {
     int J3 = Controller1.Axis3.position(pct);
     int J1 = Controller1.Axis1.position(pct);
 
-    LF.spin(forward, J3+J1,pct);
-    LM.spin(forward, J3+J1,pct);
-    LB.spin(forward, J3+J1,pct);
+    LF.spin(forward, J1+J3,pct);
+    LM.spin(forward, J1+J3,pct);
+    LB.spin(forward, J1+J3,pct);
     RF.spin(forward, J1-J3,pct);
     RM.spin(forward, J1-J3,pct);
     RB.spin(forward, J1-J3,pct);
