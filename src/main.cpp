@@ -19,9 +19,9 @@ controller Controller1 (primary);
 motor LF (PORT3,ratio6_1,true);
 motor LM (PORT2,ratio6_1,true);
 motor LB (PORT1,ratio6_1,true);
-motor RF (PORT13,ratio6_1,true);
-motor RM (PORT12,ratio6_1,true);
-motor RB (PORT11,ratio6_1,true);
+motor RF (PORT13,ratio6_1,false);
+motor RM (PORT12,ratio6_1,false);
+motor RB (PORT11,ratio6_1,false);
 
 // define your global instances of motors and other devices here
 
