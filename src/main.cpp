@@ -23,8 +23,6 @@ motor RF (PORT13,ratio6_1,true);
 motor RM (PORT12,ratio6_1,true);
 motor RB (PORT11,ratio6_1,true);
 
-int J3 = Controller1.Axis3.position(pct);
-int J1 = Controller1.Axis1.position(pct);
 // define your global instances of motors and other devices here
 
 /*---------------------------------------------------------------------------*/
@@ -38,7 +36,7 @@ int J1 = Controller1.Axis1.position(pct);
 /*---------------------------------------------------------------------------*/
 
 void pre_auton(void) {
-
+  
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
 }
@@ -69,19 +67,19 @@ void autonomous(void) {
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 void stopmotors (){
-    LF.setStopping(brake);
-    LM.setStopping(brake);
-    LB.setStopping(brake);
-    RF.setStopping(brake);
-    RM.setStopping(brake);
-    RB.setStopping(brake);
-
-    LF.stop();
-    LM.stop();
-    LB.stop();
-    RF.stop();
-    RM.stop();
-    RB.stop();
+  LF.setStopping(brake);
+  LM.setStopping(brake);
+  LB.setStopping(brake);
+  RF.setStopping(brake);
+  RM.setStopping(brake);
+  RB.setStopping(brake);
+  
+  LF.stop();
+  LM.stop();
+  LB.stop();
+  RF.stop();
+  RM.stop();
+  RB.stop();
 }
 void usercontrol(void) {
   // User control code here, inside the loop
@@ -89,14 +87,16 @@ void usercontrol(void) {
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
+    int J3 = Controller1.Axis3.position(pct);
+    int J1 = Controller1.Axis1.position(pct);
+
     LF.spin(forward, J3+J1,pct);
     LM.spin(forward, J3+J1,pct);
     LB.spin(forward, J3+J1,pct);
     RF.spin(forward, J1-J3,pct);
     RM.spin(forward, J1-J3,pct);
     RB.spin(forward, J1-J3,pct);
-
-    stopmotors ();
+    
     // ........................................................................
     // Insert user code here. This is where you use the joystick values to
     // update your motors, etc.
