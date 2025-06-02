@@ -16,12 +16,12 @@ competition Competition;
 
 controller Controller1 (primary);
 
-motor LF (PORT7, false);
-motor LM (PORT6,false);
+motor LF (PORT3, false);
+motor LM (PORT2,false);
 motor LB (PORT1,false);
-motor RF (PORT19);
-motor RM (PORT17);
-motor RB (PORT15);
+motor RF (PORT13);
+motor RM (PORT12);
+motor RB (PORT11);
 
 int J3 = Controller1.Axis3.position(pct);
 int J1 = Controller1.Axis1.position(pct);
