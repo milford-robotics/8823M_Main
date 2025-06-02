@@ -16,9 +16,9 @@ competition Competition;
 
 controller Controller1 (primary);
 
-motor LF (PORT3,ratio6_1,false);
-motor LM (PORT2,ratio6_1,false);
-motor LB (PORT1,ratio6_1,false);
+motor LF (PORT3,ratio6_1,true);
+motor LM (PORT2,ratio6_1,true);
+motor LB (PORT1,ratio6_1,true);
 motor RF (PORT13,ratio6_1,true);
 motor RM (PORT12,ratio6_1,true);
 motor RB (PORT11,ratio6_1,true);
@@ -90,12 +90,12 @@ void usercontrol(void) {
     int J3 = Controller1.Axis3.position(pct);
     int J1 = Controller1.Axis1.position(pct);
 
-    LF.spin(forward, J1+J3,pct);
-    LM.spin(forward, J1+J3,pct);
-    LB.spin(forward, J1+J3,pct);
-    RF.spin(forward, J1-J3,pct);
-    RM.spin(forward, J1-J3,pct);
-    RB.spin(forward, J1-J3,pct);
+    LF.spin(forward, J3+J1,pct);
+    LM.spin(forward, J3+J1,pct);
+    LB.spin(forward, J3+J1,pct);
+    RF.spin(forward, J3-J1,pct);
+    RM.spin(forward, J3-J1,pct);
+    RB.spin(forward, J3-J1,pct);
     
     // ........................................................................
     // Insert user code here. This is where you use the joystick values to
