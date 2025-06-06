@@ -16,12 +16,19 @@ competition Competition;
 
 controller Controller1 (primary);
 
-motor LF (PORT3,ratio6_1,true);
-motor LM (PORT2,ratio6_1,true);
+//motor LF (PORT3,ratio6_1,true);
+//motor LM (PORT2,ratio6_1,true);
 motor LB (PORT1,ratio6_1,true);
 motor RF (PORT13,ratio6_1,false);
 motor RM (PORT12,ratio6_1,false);
 motor RB (PORT11,ratio6_1,false);
+motor Intake1(PORT1,ratio6_1);
+motor Intake2(PORT2,ratio6_1,false);
+bool R1=0;
+bool R1 = Controller1.ButtonR1.pressing();
+bool R2 = 0;
+bool R2 = Controller1.ButtonR2.pressing();
+
 
 // define your global instances of motors and other devices here
 
@@ -67,22 +74,22 @@ void autonomous(void) {
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 void stopmotors (){
-  LF.setStopping(brake);
-  LM.setStopping(brake);
+  //LF.setStopping(brake);
+  //LM.setStopping(brake);
   LB.setStopping(brake);
   RF.setStopping(brake);
   RM.setStopping(brake);
   RB.setStopping(brake);
   
-  LF.stop();
-  LM.stop();
+  //LF.stop();
+  //LM.stop();
   LB.stop();
   RF.stop();
   RM.stop();
   RB.stop();
 }
 void usercontrol(void) {
-  // User control code here, inside the loop
+  // User control code here, inside the loopo
   while (1) {
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
@@ -90,12 +97,23 @@ void usercontrol(void) {
     int J3 = Controller1.Axis3.position(pct);
     int J1 = Controller1.Axis1.position(pct);
 
-    LF.spin(forward, J3+J1,pct);
-    LM.spin(forward, J3+J1,pct);
+    //LF.spin(forward, J3+J1,pct);
+    //LM.spin(forward, J3+J1,pct);
     LB.spin(forward, J3+J1,pct);
     RF.spin(forward, J3-J1,pct);
     RM.spin(forward, J3-J1,pct);
     RB.spin(forward, J3-J1,pct);
+
+    while (R1==!R1){
+      if (R1 = 1){
+        Intake1.spin(forward,100,pct);
+        Intake2.spin(forward,100,pct);
+      }
+      else {
+        Intake1.stop();
+        Intake2.stop();
+      }
+    }
     
     // ........................................................................
     // Insert user code here. This is where you use the joystick values to
