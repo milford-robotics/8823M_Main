@@ -25,9 +25,7 @@ motor RB (PORT11,ratio6_1,false);
 motor Intake1(PORT1,ratio6_1);
 motor Intake2(PORT2,ratio6_1,false);
 bool R1_old=0;
-bool R1 = Controller1.ButtonR1.pressing();
 bool toggle = 0;
-bool R2 = Controller1.ButtonR2.pressing();
 
 
 // define your global instances of motors and other devices here
@@ -97,6 +95,9 @@ void usercontrol(void) {
     int J3 = Controller1.Axis3.position(pct);
     int J1 = Controller1.Axis1.position(pct);
 
+    bool R1 = Controller1.ButtonR1.pressing();
+    bool R2 = Controller1.ButtonR2.pressing();
+
     //LF.spin(forward, J3+J1,pct);
     //LM.spin(forward, J3+J1,pct);
     //LB.spin(forward, J3+J1,pct);
@@ -104,11 +105,14 @@ void usercontrol(void) {
     RM.spin(forward, J3-J1,pct);
     RB.spin(forward, J3-J1,pct);
 
-    if (R1 &&!R1_old){
-      toggle = 1-toggle;
+    if (R1 && !R1_old){
+      toggle = !toggle;
       if (toggle &&!toggle){
         Intake1.spin(forward,100,pct);
         Intake2.spin(forward,100,pct);
+      } else {
+        Intake1.stop();
+        Intake2.stop();
       }
     }
     R1_old=R1;
