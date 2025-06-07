@@ -23,7 +23,7 @@ motor RF (PORT13,ratio6_1,false);
 motor RM (PORT12,ratio6_1,false);
 motor RB (PORT11,ratio6_1,false);
 motor Intake1(PORT1,ratio6_1);
-motor Intake2(PORT2,ratio6_1,false);
+motor Intake2(PORT2,ratio6_1);
 bool R1_old;
 bool toggle;
 
