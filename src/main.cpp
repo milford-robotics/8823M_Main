@@ -107,7 +107,7 @@ void usercontrol(void) {
 
     if (R1 && !R1_old){
       toggle = !toggle;
-      if (toggle &&!toggle){
+      if (toggle){
         Intake1.spin(forward,100,pct);
         Intake2.spin(forward,100,pct);
       } else {
