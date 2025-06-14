@@ -25,7 +25,9 @@ motor RB (PORT11,ratio6_1,false);
 motor Intake1(PORT5,ratio6_1);
 motor Intake2(PORT14,ratio6_1, true);
 bool R1_old;
+bool R2_old;
 bool toggle;
+bool toggleR;
 
 
 // define your global instances of motors and other devices here
@@ -116,6 +118,18 @@ void usercontrol(void) {
       }
     }
     R1_old=R1;
+
+    if (R2 && !R2_old){
+      toggleR = !toggleR;
+      if (toggleR){
+        Intake1.spin(reverse,100,pct);
+        Intake2.spin(reverse,100,pct);
+      } else {
+        Intake1.stop();
+        Intake2.stop();
+      }
+    }
+    R2_old=R2;
     // ........................................................................
     // Insert user code here. This is where you use the joystick values to
     // update your motors, etc.
