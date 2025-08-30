@@ -28,9 +28,10 @@ motor Ramp2(PORT15,ratio6_1,true);
 motor Ramp1(PORT16,ratio6_1,false);
 bool R1_old;
 bool R2_old;
+bool L1_old;
 bool toggle;
 bool toggleR;
-bool BY_old;
+bool toggleL;
 
 // define your global instances of motors and other devices here
 
@@ -102,6 +103,7 @@ void usercontrol(void) {
     bool R1 = Controller1.ButtonR1.pressing();
     bool R2 = Controller1.ButtonR2.pressing();
     bool BY = Controller1.ButtonY.pressing();
+    bool L1 = Controller1.ButtonL1.pressing();
 
     LF.spin(forward, J3+J1,pct);
     LM.spin(forward, J3+J1,pct);
@@ -129,42 +131,7 @@ void usercontrol(void) {
     if (R2 && !R2_old){
       toggleR = !toggleR;
       if (toggleR){
-        Ramp1.spin(forward,100,pct);
-        Ramp2.spin(forward,100,pct);
-        Intake1.spin(reverse,100,pct);
-        Intake2.spin(reverse,100,pct);
-      } else {
-        Ramp1.stop();
-        Ramp2.stop();
-        Intake1.stop();
-        Intake2.stop();
-      }
-    }
-    R2_old=R2;
-
-    if (BY && !BY_old){
-      toggleR = !toggleR;
-      if (toggleR){
-         if (R2 && !R2_old){
-      toggleR = !toggleR;
-      if (toggleR){
-        Ramp1.spin(forward,100,pct);
-        Ramp2.spin(forward,100,pct);
-        Intake1.spin(reverse,100,pct);
-        Intake2.spin(reverse,100,pct);
-      } else {
-        Ramp1.stop();
-        Ramp2.stop();
-        Intake1.stop();
-        Intake2.stop();
-      }
-    }
-    R2_old=R2;
-      } else {
-         if (R2 && !R2_old){
-      toggleR = !toggleR;
-      if (toggleR){
-        Ramp1.spin(forward,100,pct);
+        Ramp1.spin(reverse,100,pct);
         Ramp2.spin(reverse,100,pct);
         Intake1.spin(reverse,100,pct);
         Intake2.spin(reverse,100,pct);
@@ -176,9 +143,23 @@ void usercontrol(void) {
       }
     }
     R2_old=R2;
+
+   if (L1 && !L1_old){
+      toggleL = !toggleL;
+      if (toggleL){
+        Ramp1.spin(forward,100,pct);
+        Ramp2.spin(reverse,100,pct);
+        Intake1.spin(forward,100,pct);
+        Intake2.spin(forward,100,pct);
+      } else {
+        Ramp1.stop();
+        Ramp2.stop();
+        Intake1.stop();
+        Intake2.stop();
       }
     }
-    BY_old=BY;
+    L1_old=L1;
+
     // ........................................................................
     // Insert user code here. This is where you use the joystick values to
     // update your motors, etc.
