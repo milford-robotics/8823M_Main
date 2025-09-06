@@ -131,7 +131,7 @@ void usercontrol(void) {
     if (R2 && !R2_old){
       toggleR = !toggleR;
       if (toggleR){
-        Ramp1.spin(reverse,100,pct);
+        Ramp1.spin(forward,100,pct);
         Ramp2.spin(reverse,100,pct);
         Intake1.spin(reverse,100,pct);
         Intake2.spin(reverse,100,pct);
@@ -147,7 +147,7 @@ void usercontrol(void) {
    if (L1 && !L1_old){
       toggleL = !toggleL;
       if (toggleL){
-        Ramp1.spin(forward,100,pct);
+        Ramp1.spin(reverse,100,pct);
         Ramp2.spin(reverse,100,pct);
         Intake1.spin(forward,100,pct);
         Intake2.spin(forward,100,pct);
