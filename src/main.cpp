@@ -24,7 +24,7 @@ motor RM (PORT12,ratio6_1,false);
 motor RB (PORT11,ratio6_1,false);
 motor Intake1(PORT5,ratio6_1);
 motor Intake2(PORT14,ratio6_1, true);
-motor Ramp2(PORT15,ratio6_1,true);
+motor Ramp2(PORT15,ratio6_1,false);
 motor Ramp1(PORT16,ratio6_1,false);
 bool R1_old;
 bool R2_old;
@@ -98,7 +98,7 @@ void usercontrol(void) {
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
     int J3 = Controller1.Axis3.position(pct);
-    int J1 = Controller1.Axis1.position(pct);
+    int J1 = 0.75*Controller1.Axis1.position(pct);
 
     bool R1 = Controller1.ButtonR1.pressing();
     bool R2 = Controller1.ButtonR2.pressing();
@@ -131,10 +131,10 @@ void usercontrol(void) {
     if (R2 && !R2_old){
       toggleR = !toggleR;
       if (toggleR){
-        Ramp1.spin(forward,100,pct);
-        Ramp2.spin(reverse,100,pct);
-        Intake1.spin(reverse,100,pct);
-        Intake2.spin(reverse,100,pct);
+        Ramp1.spin(reverse,100,pct);
+        Ramp2.spin(forward,100,pct);
+        Intake1.spin(forward,100,pct);
+        Intake2.spin(forward,100,pct);
       } else {
         Ramp1.stop();
         Ramp2.stop();
@@ -149,8 +149,8 @@ void usercontrol(void) {
       if (toggleL){
         Ramp1.spin(reverse,100,pct);
         Ramp2.spin(reverse,100,pct);
-        Intake1.spin(forward,100,pct);
-        Intake2.spin(forward,100,pct);
+        Intake1.spin(reverse,100,pct);
+        Intake2.spin(reverse,100,pct);
       } else {
         Ramp1.stop();
         Ramp2.stop();
