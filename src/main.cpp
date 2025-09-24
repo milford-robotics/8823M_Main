@@ -26,6 +26,7 @@ motor Intake1(PORT5,ratio6_1);
 motor Intake2(PORT14,ratio6_1, true);
 motor Ramp2(PORT15,ratio6_1,false);
 motor Ramp1(PORT16,ratio6_1,false);
+inertial Inertial_Sensor (PORT10);
 bool R1_old;
 bool R2_old;
 bool L1_old;
@@ -49,6 +50,10 @@ void pre_auton(void) {
   
   // All activities that occur before the competition starts
   // Example: clearing encoders, setting servo positions, ...
+ Inertial_Sensor.calibrate();
+  while (Inertial_Sensor.isCalibrating()) {
+    wait(100, msec);
+  }
 }
 
 /*---------------------------------------------------------------------------*/
@@ -61,21 +66,20 @@ void pre_auton(void) {
 /*  You must modify the code to add your own robot specific commands here.   */
 /*---------------------------------------------------------------------------*/
 
-void autonomous(void) {
-  // ..........................................................................
-  // Insert autonomous user code here.
-  // ..........................................................................
-}
+float diameter=3.25;
+float circumference=M_PI*diameter;
+float gear_ratio=3./4.;
 
-/*---------------------------------------------------------------------------*/
-/*                                                                           */
-/*                              User Control Task                            */
-/*                                                                           */
-/*  This task is used to control your robot during the user control phase of */
-/*  a VEX Competition.                                                       */
-/*                                                                           */
-/*  You must modify the code to add your own robot specific commands here.   */
-/*---------------------------------------------------------------------------*/
+void Drive (int distance, int speed){
+  float angle;
+  angle=360*distance/(circumference*gear_ratio);
+  LF.spinFor (forward,angle,deg,speed,velocityUnits::pct, false);
+  LM.spinFor (forward,angle,deg,speed,velocityUnits::pct, false);
+  LB.spinFor (forward,angle,deg,speed,velocityUnits::pct, false);
+  RF.spinFor (forward,angle,deg,speed,velocityUnits::pct, false);
+  RM.spinFor (forward,angle,deg,speed,velocityUnits::pct, false);
+  RB.spinFor (forward,angle,deg,speed,velocityUnits::pct, true);
+}
 void stopmotors (){
   LF.setStopping(brake);
   LM.setStopping(brake);
@@ -91,14 +95,77 @@ void stopmotors (){
   RM.stop();
   RB.stop();
 }
+void Turn (float angle){
+
+  int top_speed=45;
+  float speed;
+  float error=1;
+  float kp=0.075;
+  while (fabs(error)>1.0){
+    error=angle-Inertial_Sensor.rotation(deg);
+    speed=kp*error;
+
+    if (speed>top_speed)speed=top_speed;
+    if (speed<-top_speed)speed=-top_speed;
+
+    LF.spin(forward,speed,pct);
+    LM.spin(forward,speed,pct);
+    LB.spin(forward,speed,pct);
+    RF.spin(forward,-speed,pct);
+    RM.spin(forward,-speed,pct);
+    RB.spin(forward,-speed,pct);
+    
+    wait (10,msec);
+  }
+  stopmotors();
+ Inertial_Sensor.resetRotation();
+}
+
+
+void autonomous(void) {
+  // ..........................................................................
+  // Insert autonomous user code here.
+  // ..........................................................................
+  Drive (24,75);
+  Turn (-90);
+  Intake1.spin(forward,100,pct);
+  Intake2.spin(forward,100,pct);
+  Ramp1.spin(forward,50,pct);
+  Ramp2.spin(forward,50,pct);
+  Drive (15,100);
+  wait (3,sec);
+  Intake1.stop();
+  Intake2.stop();
+  Ramp1.stop();
+  Ramp2.stop();
+  Drive (-24,100);
+  wait (150,msec);
+  Intake1.spin(forward,100,pct);
+  Intake2.spin(forward,100,pct);
+  Ramp1.spin(forward,100,pct);
+  Ramp2.spin(forward,100,pct);
+  wait (2,sec);
+  Drive (5,100);
+
+}
+
+/*---------------------------------------------------------------------------*/
+/*                                                                           */
+/*                              User Control Task                            */
+/*                                                                           */
+/*  This task is used to control your robot during the user control phase of */
+/*  a VEX Competition.                                                       */
+/*                                                                           */
+/*  You must modify the code to add your own robot specific commands here.   */
+/*---------------------------------------------------------------------------*/
 void usercontrol(void) {
-  // User control code here, inside the loopo
+  // User control code here, inside the loop
   while (1) {
     // This is the main execution loop for the user control program.
     // Each time through the loop your program should update motor + servo
     // values based on feedback from the joysticks.
     int J3 = Controller1.Axis3.position(pct);
-    int J1 = 0.75*Controller1.Axis1.position(pct);
+    int J1 = 0.65*Controller1.Axis1.position(pct);
 
     bool R1 = Controller1.ButtonR1.pressing();
     bool R2 = Controller1.ButtonR2.pressing();
