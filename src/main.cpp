@@ -54,6 +54,8 @@ void pre_auton(void) {
   while (Inertial_Sensor.isCalibrating()) {
     wait(100, msec);
   }
+  /*Intake1.setTimeout(1,sec);
+  Intake2.setTimeout(1,sec);*/
 }
 
 /*---------------------------------------------------------------------------*/
@@ -99,8 +101,8 @@ void Turn (float angle){
 
   int top_speed=45;
   float speed;
-  float error=1;
-  float kp=0.075;
+  float error=180;
+  float kp=0.5;
   while (fabs(error)>1.0){
     error=angle-Inertial_Sensor.rotation(deg);
     speed=kp*error;
@@ -126,26 +128,34 @@ void autonomous(void) {
   // ..........................................................................
   // Insert autonomous user code here.
   // ..........................................................................
-  Drive (24,75);
+  Drive (30,75);
   Turn (-90);
   Intake1.spin(forward,100,pct);
   Intake2.spin(forward,100,pct);
   Ramp1.spin(forward,50,pct);
   Ramp2.spin(forward,50,pct);
-  Drive (15,100);
-  wait (3,sec);
+  Drive (15,25);
+  wait (1,sec);
   Intake1.stop();
   Intake2.stop();
   Ramp1.stop();
   Ramp2.stop();
-  Drive (-24,100);
+  Drive (-30,50);
   wait (150,msec);
   Intake1.spin(forward,100,pct);
   Intake2.spin(forward,100,pct);
   Ramp1.spin(forward,100,pct);
   Ramp2.spin(forward,100,pct);
-  wait (2,sec);
+  wait (3,sec);
   Drive (5,100);
+  Turn (-90);
+  Drive (24,100);
+  Turn (-90);
+  Drive (15,75);
+  Turn (45);
+  Drive (15, 45);
+  Ramp2.spin(forward,100,pct);
+  Ramp1.spin(reverse,100,pct);
 
 }
 
