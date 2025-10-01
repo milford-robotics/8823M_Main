@@ -134,29 +134,30 @@ void autonomous(void) {
   Intake2.spin(forward,100,pct);
   Ramp1.spin(forward,50,pct);
   Ramp2.spin(forward,50,pct);
-  Drive (15,25);
+  Drive (9,25);
   wait (1,sec);
   Intake1.stop();
   Intake2.stop();
   Ramp1.stop();
   Ramp2.stop();
-  Drive (-30,50);
+  Drive (-30,25);
   wait (150,msec);
   Intake1.spin(forward,100,pct);
   Intake2.spin(forward,100,pct);
   Ramp1.spin(forward,100,pct);
   Ramp2.spin(forward,100,pct);
   wait (3,sec);
-  Drive (5,100);
+  Drive (8,75);
   Turn (-90);
-  Drive (24,100);
+  Drive (22,75); 
   Turn (-90);
-  Drive (15,75);
-  Turn (45);
-  Drive (15, 45);
+  Drive (18,25);
+  Ramp2.stop();
+  Ramp1.stop();
+  Turn (48);
+  Drive (16,45);
   Ramp2.spin(forward,100,pct);
   Ramp1.spin(reverse,100,pct);
-
 }
 
 /*---------------------------------------------------------------------------*/
