@@ -128,7 +128,6 @@ void autonomous(void) {
   // ..........................................................................
   // Insert autonomous user code here.
   // ..........................................................................
-  Drive (30,75);
   Turn (-90);
   Intake1.spin(forward,100,pct);
   Intake2.spin(forward,100,pct);
@@ -140,7 +139,9 @@ void autonomous(void) {
   Intake2.stop();
   Ramp1.stop();
   Ramp2.stop();
-  Drive (-30,25);
+  Drive (-15,25);
+  Turn (1);
+  Drive (-15,25);
   wait (150,msec);
   Intake1.spin(forward,100,pct);
   Intake2.spin(forward,100,pct);
