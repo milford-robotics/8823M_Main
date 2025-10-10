@@ -123,25 +123,36 @@ void Turn (float angle){
  Inertial_Sensor.resetRotation();
 }
 
+void HeadingFix(float angle){
+  float angle1;
+  angle1=Inertial_Sensor.heading(deg);
+  if (angle1 > 180) angle1=angle1-360.0;
+  angle=angle-angle1;
+  Turn (angle);
+}
 
 void autonomous(void) {
   // ..........................................................................
   // Insert autonomous user code here.
   // ..........................................................................
-  Turn (-90);
+  Drive (30,75); // previously (27,75) 
+  wait (150,msec);
+  Turn (-91);
   Intake1.spin(forward,100,pct);
   Intake2.spin(forward,100,pct);
   Ramp1.spin(forward,50,pct);
   Ramp2.spin(forward,50,pct);
-  Drive (9,25);
+  Drive (10,25);
   wait (1,sec);
   Intake1.stop();
   Intake2.stop();
   Ramp1.stop();
   Ramp2.stop();
-  Drive (-15,25);
-  Turn (1);
-  Drive (-15,25);
+  wait (150, msec);
+  Drive (-5,25);
+  Turn (-3);
+  HeadingFix (-94);
+  Drive (-26,25);
   wait (150,msec);
   Intake1.spin(forward,100,pct);
   Intake2.spin(forward,100,pct);
@@ -149,13 +160,13 @@ void autonomous(void) {
   Ramp2.spin(forward,100,pct);
   wait (3,sec);
   Drive (8,75);
-  Turn (-90);
+  HeadingFix(-180);
   Drive (22,75); 
-  Turn (-90);
-  Drive (18,25);
+  HeadingFix(-270);
+  Drive (20,25);
   Ramp2.stop();
   Ramp1.stop();
-  Turn (48);
+  HeadingFix(135);
   Drive (16,45);
   Ramp2.spin(forward,100,pct);
   Ramp1.spin(reverse,100,pct);
